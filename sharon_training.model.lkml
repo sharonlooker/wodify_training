@@ -1,0 +1,7 @@
+connection: "red_look"
+
+# include all the views
+include: "*.view"
+
+# include all the dashboards
+include: "*.dashboard"

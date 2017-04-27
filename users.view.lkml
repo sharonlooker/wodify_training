@@ -12,6 +12,18 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  dimension: is_over_18 {
+    type: yesno
+    sql: ${age} > 18 ;;
+  }
+
+  dimension: age_tier {
+    type: tier
+    tiers: [0,10,20,30,40,50,60,70,80]
+    style: integer
+    sql: ${age} ;;
+  }
+
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
@@ -56,6 +68,11 @@ view: users {
     sql: ${TABLE}.last_name ;;
   }
 
+  dimension: full_name {
+    type: string
+    sql: ${first_name} ||  ' ' || ${last_name} ;;
+  }
+
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
@@ -71,8 +88,13 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
-  measure: count {
+  measure: count_users {
     type: count
     drill_fields: [id, first_name, last_name, orders.count]
+  }
+
+  measure: average_age {
+    type: average
+    sql: ${age} ;;
   }
 }

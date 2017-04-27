@@ -2,9 +2,15 @@ view: orders {
   sql_table_name: public.orders ;;
 
   dimension: id {
-    primary_key: yes
+#     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+  }
+
+  dimension: primary_key {
+    hidden: yes
+    primary_key: yes
+    sql: ${id} || '' || ${created_raw} ;;
   }
 
   dimension_group: created {
@@ -19,6 +25,11 @@ view: orders {
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: days_as_user {
+    type: number
+    sql: datediff('days',${users.created_raw},${created_raw}) ;;
   }
 
   dimension: status {
